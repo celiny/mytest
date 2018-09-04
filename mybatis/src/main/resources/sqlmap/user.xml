@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：名称空间，相当于java代码中的package，用于放置sql语句名称冲突（sql语句隔离）  -->
+<mapper namespace="test">
+
+	<!-- 说明：mybatis框架针对每一种sql语句：新增/查询/修改/删除,提供了对应的标签：
+		insert/select/update/delete来放置
+ 	-->
+ 	<!-- 根据用户id查询用户，说明：
+	 	select：放置查询sql语句
+	 	id：唯一标识名称
+	 	parameterType:输入参数类型
+	 	resultType：返回值（输出）类型
+	 	#{id}:站位符，相当于jdbc中的问号
+  	-->
+	<select id="queryUserByID" parameterType="int" resultType="com.itheima.po.User">
+		select * from user where id =#{abc}
+	</select>
+	<!--根据用户名称模糊查询用户  -->
+	<select id="queryUserByName" parameterType="String" resultType="com.itheima.po.User">
+		select * from user where username like '%${value}明';
+	</select>
+	<!-- 新增一个客户 -->
+	<insert id="inserUser" parameterType="com.itheima.po.User">
+		<selectKey keyColumn="id" keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into user (id,username,birthday,sex,address) values (#{id},#{username},#{birthday},#{sex},#{address});
+	</insert>
+	<!-- 根据用户id修改用户 -->
+	<update id="updateUserById" parameterType="com.itheima.po.User">
+		update user set username=#{username},sex=#{sex} where id=#{id}
+	</update>
+	<!-- 根据用户id删除用户 -->
+	<delete id="deleteUserById" parameterType="int">
+		delete from user where id=#{id}
+	</delete>
+</mapper>

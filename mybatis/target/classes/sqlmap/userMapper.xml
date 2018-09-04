@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：名称空间，相当于java代码中的package，用于放置sql语句名称冲突（sql语句隔离）  -->
+<mapper namespace="com.itheima.mapper.UserMapper">
+	<select id="queryUserById" parameterType="int" resultType="com.itheima.po.User">
+		select * from user where id =#{id}
+	</select>
+	<insert id="inserUser" parameterType="com.itheima.po.User" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into user (id,username,birthday,sex,address) values (#{id},#{username},#{birthday},#{sex},#{address});
+	</insert>
+	
+</mapper>
